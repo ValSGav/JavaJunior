@@ -1,6 +1,5 @@
 package ru.gb.lesson1.homework;
 
-import ru.gb.lesson1.Optionals;
 import ru.gb.lesson1.Streams;
 
 import java.util.*;
@@ -23,8 +22,6 @@ public class Homework {
                         , new Streams.Department(departamentsNames[rnd.nextInt(departamentsNames.length)])))
                 .limit(sizeOfListPersons)
                 .toList();
-        ;
-
 
         printNamesOrdered(persons);
         System.out.println(printDepartmentOldestPerson(persons));
@@ -33,9 +30,6 @@ public class Homework {
     }
     /**
      * Реалзиовать методы, описанные ниже:
-     */
-
-    /**
      * Вывести на консоль отсортированные (по алфавиту) имена персонов
      */
     public static void printNamesOrdered(List<Streams.Person> persons) {
@@ -55,7 +49,8 @@ public class Homework {
                         , Collectors.maxBy(Comparator.comparing(Streams.Person::getAge))))
                 .entrySet()
                 .stream()
-                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue().get()));
+                .collect(Collectors.toMap(Map.Entry::getKey
+                                            , v -> v.getValue().get()));
     }
 
     /**
@@ -79,8 +74,7 @@ public class Homework {
                         , Collectors.summingDouble(Streams.Person::getSalary)))
                 .entrySet()
                 .stream()
-                .sorted(Comparator.comparing(Map.Entry<Streams.Department, Double>::getValue).reversed())
-                .findFirst()
+                .max(Comparator.comparing(Map.Entry<Streams.Department, Double>::getValue))
                 .get()
                 .getKey());
 
